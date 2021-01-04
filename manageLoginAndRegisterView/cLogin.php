@@ -1,7 +1,7 @@
 <?php
 require_once $_SERVER["DOCUMENT_ROOT"].'/sdw/BusinessServiceLayer/manageLoginAndRegisterController/manageLoginAndRegisterController.php';
 
-$cust = new manageLoginAndRegisterController();
+$cust = new manageLoginAndRegisterController();asdsad
 if (isset($_POST['login'])) {
     $cust->cLogin();
 }
