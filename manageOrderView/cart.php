@@ -1,4 +1,6 @@
+
 <?php
+error_reporting(0);
 require_once $_SERVER["DOCUMENT_ROOT"].'/sdw/BusinessServiceLayer/manageOrderController/manageOrderController.php';
 
 session_start();
@@ -6,8 +8,11 @@ session_start();
 $service = new manageOrderController();
 $data = $service->viewCart(); 
 
+
+
 $total_quantity = 0;
 $total_price = 0;
+
 
 if(isset($_POST['delete'])){
 	$service->deleteCart();
@@ -21,6 +26,14 @@ if(isset($_POST['checkout'])) {
     echo "<script>;
    	window.location = '../managePaymentView/checkout.php?cust_ID=".$_SESSION['cust_ID']."'</script>";
 }
+
+if (isset($_POST['submit'])) {
+  if(!(is_null($_POST['search']))){
+  $search = $_POST['search'];
+  $data = $service->searchProductCart($search);
+  }
+}
+
 ?>
 <html>
   <head>
@@ -59,6 +72,14 @@ if(isset($_POST['checkout'])) {
         </ul>
         </li>
       </ul>
+	  
+	   <form class="navbar-form navbar-left" method="POST">
+        <div class="form-group">
+          <input type="text" class="form-control" name="search" placeholder="Search Product in Cart...">
+        </div>
+        <button type="submit" name="submit" class="btn btn-default">Search</button>
+      </form>
+
       <ul class="nav navbar-nav navbar-right">
         <li><a href="../manageOrderView/cart.php?cust_ID=<?=$_SESSION['cust_ID']?>"><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
         <li><a href="../manageUserProfileView/custProfile.php?cust_ID=<?=$_SESSION['cust_ID']?>"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
